@@ -1,2 +1,2 @@
 # TeAmoMax
-Perdon por no ser suficiente
+Eso es una page dedicatoria, ignorar
