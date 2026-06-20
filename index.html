@@ -1,510 +1,646 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consumo</title>
+    <title>Feliz Cumpleaños Max - Nuestro Universo</title>
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 
-      body {
-        font-family: 'Georgia', 'Garamond', serif;
-        background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 50%, #0d1b2a 100%);
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-        position: relative;
-        color: #e0e0e0;
-      }
+        * { box-sizing: border-box; }
 
-      /* Constelaciones de fondo */
-      canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-      }
-
-      .container {
-        position: relative;
-        z-index: 2;
-        text-align: center;
-        background: rgba(20, 20, 40, 0.7);
-        padding: 60px 50px;
-        border-radius: 10px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(200, 100, 150, 0.3);
-        max-width: 700px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(200, 100, 150, 0.05);
-      }
-
-      h1 {
-        color: #d4715f;
-        font-size: 2.8em;
-        margin-bottom: 15px;
-        text-shadow: 0 0 30px rgba(212, 113, 95, 0.4);
-        font-weight: normal;
-        letter-spacing: 2px;
-      }
-
-      .subtitle {
-        color: #9fa8a3;
-        font-size: 1.05em;
-        margin-bottom: 50px;
-        font-style: italic;
-        font-weight: 300;
-      }
-
-      .phrase-box {
-        min-height: 120px;
-        background: linear-gradient(135deg, rgba(212, 113, 95, 0.08) 0%, rgba(100, 50, 80, 0.08) 100%);
-        border: 2px solid rgba(212, 113, 95, 0.4);
-        border-radius: 8px;
-        padding: 40px;
-        margin-bottom: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .phrase-box::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(45deg, transparent 30%, rgba(212, 113, 95, 0.1) 50%, transparent 70%);
-        pointer-events: none;
-      }
-
-      .phrase-text {
-        font-size: 1.6em;
-        color: #e8d5c4;
-        font-weight: 300;
-        line-height: 1.8;
-        text-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
-        position: relative;
-        z-index: 1;
-        letter-spacing: 0.5px;
-      }
-
-      .buttons-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        gap: 18px;
-        margin-bottom: 30px;
-      }
-
-      button {
-        background: linear-gradient(135deg, #8b4545 0%, #c74d4d 50%, #8b3a3a 100%);
-        color: #f5e6d3;
-        border: 1px solid rgba(212, 113, 95, 0.5);
-        padding: 16px 28px;
-        border-radius: 6px;
-        font-size: 0.95em;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.4s ease;
-        box-shadow: 0 4px 20px rgba(139, 69, 69, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        position: relative;
-        overflow: hidden;
-        letter-spacing: 0.5px;
-        font-family: 'Georgia', serif;
-      }
-
-      button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(199, 77, 77, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-        background: linear-gradient(135deg, #a05555 0%, #e05f5f 50%, #9d4a4a 100%);
-        border-color: rgba(212, 113, 95, 0.8);
-      }
-
-      button:active {
-        transform: translateY(0px);
-        box-shadow: 0 2px 10px rgba(139, 69, 69, 0.6), inset 0 2px 5px rgba(0, 0, 0, 0.3);
-      }
-
-      /* Efecto de sangre al presionar */
-      button::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        border-radius: 50%;
-        background: rgba(255, 200, 200, 0.4);
-        transform: translate(-50%, -50%);
-        pointer-events: none;
-      }
-
-      button:active::before {
-        animation: bleeding 0.7s ease-out;
-      }
-
-      @keyframes bleeding {
-        to {
-          width: 350px;
-          height: 350px;
-          opacity: 0;
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #010103;
+            color: #fdfdfd;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-      }
 
-      /* Animación de gotas de sangre */
-      .blood-drop {
-        position: fixed;
-        pointer-events: none;
-        z-index: 3;
-        font-size: 1.3em;
-        animation: drip 3s ease-in forwards;
-      }
-
-      @keyframes drip {
-        0% {
-          opacity: 1;
-          transform: translateY(0) translateX(0) scale(1) rotate(0deg);
+        #birthday-message {
+            position: fixed;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(1.2em, 2.5vw, 2.2em);
+            text-align: center;
+            z-index: 100;
+            text-shadow: 0 0 10px #705cb8, 0 0 25px #a08de0;
+            color: #e0d9f5;
+            white-space: nowrap;
         }
-        100% {
-          opacity: 0;
-          transform: translateY(180px) translateX(var(--tx)) scale(0.3) rotate(360deg);
+
+        #background-canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
         }
-      }
 
-      /* Animación de luna */
-      .moon {
-        position: fixed;
-        pointer-events: none;
-        z-index: 3;
-        font-size: 2em;
-        animation: float-up 3s ease-in forwards;
-      }
-
-      @keyframes float-up {
-        0% {
-          opacity: 1;
-          transform: translateY(0) translateX(0) scale(1);
+        #solar-system-canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 2;
+            cursor: pointer;
         }
-        100% {
-          opacity: 0;
-          transform: translateY(-150px) translateX(var(--tx)) scale(0.5);
+
+        /* Modal */
+        #poem-modal {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(8, 5, 20, 0.97);
+            border: 1.5px solid #705cb8;
+            padding: 2.5em 2.5em 2em;
+            border-radius: 22px;
+            text-align: center;
+            z-index: 200;
+            width: 88%;
+            max-width: 420px;
+            box-shadow: 0 0 50px rgba(112, 92, 184, 0.5), 0 0 100px rgba(112, 92, 184, 0.2);
+            backdrop-filter: blur(14px);
+            animation: modalIn 0.35s cubic-bezier(.22,1,.36,1);
         }
-      }
 
-      .author {
-        color: #9fa8a3;
-        margin-top: 15px;
-        font-size: 0.9em;
-        font-style: italic;
-        opacity: 0.8;
-      }
+        @keyframes modalIn {
+            from { transform: translate(-50%, -46%) scale(0.92); opacity: 0; }
+            to   { transform: translate(-50%, -50%) scale(1);    opacity: 1; }
+        }
 
-      .success-message {
-        color: #d4715f;
-        margin-top: 20px;
-        font-size: 0.95em;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        text-shadow: 0 0 10px rgba(212, 113, 95, 0.3);
-      }
+        #poem-modal h2 {
+            margin: 0 0 0.7em;
+            color: #ffe359;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6em;
+        }
 
-      .success-message.show {
-        opacity: 1;
-      }
+        #poem-text {
+            font-size: 1.05em;
+            line-height: 1.75;
+            font-style: italic;
+            color: #ddd4f5;
+            margin: 0;
+        }
 
-      footer {
-        position: absolute;
-        bottom: 20px;
-        left: 0;
-        right: 0;
-        text-align: center;
-        color: #9fa8a3;
-        font-size: 0.9em;
-        font-style: italic;
-      }
+        .close-btn {
+            margin-top: 1.6em;
+            padding: 10px 28px;
+            background: linear-gradient(135deg, #705cb8, #5c4b9e);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95em;
+            letter-spacing: 0.04em;
+            transition: background 0.25s, transform 0.15s;
+        }
+        .close-btn:hover { background: linear-gradient(135deg, #8a72d8, #705cb8); transform: scale(1.04); }
+
+        /* Lunitas */
+        .lunita {
+            position: fixed;
+            font-size: 1.4rem;
+            pointer-events: none;
+            animation: moonFloat 1.2s ease-out forwards;
+            z-index: 250;
+        }
+        @keyframes moonFloat {
+            0%   { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--dx), var(--dy)) scale(1.5) rotate(40deg); opacity: 0; }
+        }
+
+        /* Hint */
+        #hint {
+            position: fixed;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(180,160,230,0.5);
+            font-size: 0.78em;
+            letter-spacing: 0.08em;
+            z-index: 10;
+            pointer-events: none;
+        }
     </style>
-  </head>
-  <body>
-    <canvas id="starCanvas"></canvas>
-    
-    <div class="container">
-      <h1>⸻ CONSUMO ⸻</h1>
-      <p class="subtitle">El amor que siento.</p>
-      
-      <div class="phrase-box">
-        <p class="phrase-text" id="phrase">Mi devosion por ti</p>
-      </div>
+</head>
+<body>
+    <div id="birthday-message">te amo amor, feliz cumpleaños Max ✨</div>
+    <canvas id="background-canvas"></canvas>
+    <canvas id="solar-system-canvas"></canvas>
 
-      <div class="buttons-container" id="buttonsContainer"></div>
-
-      <div class="success-message" id="successMessage">Consumido por ti</div>
+    <div id="poem-modal">
+        <h2 id="poem-title">Para Max</h2>
+        <p id="poem-text"></p>
+        <button class="close-btn" onclick="closePoem()">Cerrar ✨</button>
     </div>
 
-    <footer>Te amo, Max.</footer>
+    <div id="hint">haz clic en cualquier planeta o el sol</div>
 
     <script>
-      const frases = [
-        {
-          texto: "Te devoraría completo, hasta los huesos. Quiero consumirte lentamente.",
-          autor: "Bataille"
+    // ===================== POEMAS =====================
+    const poems = {
+        sol: {
+            title: "☀️ Nuestro Centro de Gravedad",
+            text: "Max, eres el Sol que ilumina cada uno de mis días. Mi amor por ti es inmenso y cálido, y todo mi mundo siempre orbitará cerca de ti."
         },
-        {
-          texto: "El amor es hambre. Tengo un apetito infinito por ti.",
-          autor: "Poesía visceral"
+        mercurio: {
+            title: "🪐 Tan Cerca del Fuego",
+            text: "Como Mercurio, siempre estás en mis pensamientos, girando veloz junto a mi corazón. Pequeño pero único, igual que los momentos especiales que vivimos juntos."
         },
-        {
-          texto: "Quisiera ser carne y tú el fuego que me consume sin dejarme morir.",
-          autor: "Metáfora del deseo"
+        venus: {
+            title: "💛 La Estrella del Amanecer",
+            text: "Venus brilla más que todas las estrellas en el cielo nocturno, igual que tú iluminas mi vida. Eres lo primero que pienso al despertar, Max."
         },
-        {
-          texto: "Te mastico con el pensamiento, te disuelvo en mí como alimento sagrado.",
-          autor: "Teología del cuerpo"
+        tierra: {
+            title: "🌍 Coincidir en este Cosmos",
+            text: "De entre todos los planetas y constelaciones, qué suerte la mía de coincidir contigo en esta pequeña roca azul. Mi vida está aquí, a tu lado."
         },
-        {
-          texto: "En ti busco la razón para devorar la vida completa a tu lado.",
-          autor: "Hambre existencial"
+        marte: {
+            title: "🔴 Explorando Juntos",
+            text: "Cada día contigo es una nueva aventura cósmica. Quiero seguir explorando el universo de tu corazón, Max, como los valientes rovers en Marte."
         },
-        {
-          texto: "Eres lo único que quiero consumir, lo único que llena mi apetito eterno.",
-          autor: "Obsidiana"
+        jupiter: {
+            title: "🪐 Un Amor Gigante",
+            text: "Mi amor por ti es como Júpiter: el más grande y poderoso del sistema. Eres tan importante en mi vida que tienes tu propia gravedad, Max."
         },
-        {
-          texto: "Quiero que me comas. Que me hagas tuyo hasta la médula.",
-          autor: "Vulnerabilidad radical"
+        saturno: {
+            title: "💍 Anillos de Promesas",
+            text: "Ni los anillos más hermosos de Saturno brillan tanto como tú cuando sonríes. Eres la maravilla más grande de mi universo, Max."
         },
-        {
-          texto: "El amor verdadero es canibalismo consensual: devorarnos mutuamente sin fin.",
-          autor: "Filosofía oscura"
+        urano: {
+            title: "🩵 El Planeta del Misterio",
+            text: "Como Urano, siempre me sorprendes con algo nuevo. Tu forma de ver el mundo, única e irrepetible, hace que cada día contigo sea un descubrimiento."
         },
-        {
-          texto: "Te beso como si te comiera, porque cada parte tuya es esencial para vivir.",
-          autor: "Necesidad primaria"
-        },
-        {
-          texto: "Quiero fermentarme en ti, descomponerme en tu presencia hasta ser uno.",
-          autor: "Disolución del yo"
-        },
-        {
-          texto: "El amor es la necesidad de tragarte entero, de llevarte dentro de mí.",
-          autor: "Incorporación del otro"
-        },
-        {
-          texto: "Seríamos caníbales en la noche, devorando nuestras propias almas.",
-          autor: "Rito nocturno"
+        neptuno: {
+            title: "🌊 Profundo como el Mar",
+            text: "Neptuno, el último centinela del sistema solar, vela desde la oscuridad. Así es tu amor por mí, Max: profundo, constante, infinito."
         }
-      ];
+    };
 
-      // Variables para seguimiento del mouse
-      let mouseX = window.innerWidth / 2;
-      let mouseY = window.innerHeight / 2;
+    // ===================== MODAL =====================
+    function showPoem(id, x, y) {
+        document.getElementById('poem-title').innerHTML = poems[id].title;
+        document.getElementById('poem-text').innerHTML  = poems[id].text;
+        document.getElementById('poem-modal').style.display = 'block';
+        createLunitas(x, y);
+    }
+    function closePoem() {
+        document.getElementById('poem-modal').style.display = 'none';
+    }
+    function createLunitas(x, y) {
+        const moons = ['🌙','🌛','🌜','🌔','⭐','✨'];
+        for (let i = 0; i < 10; i++) {
+            let el = document.createElement('div');
+            el.className = 'lunita';
+            el.innerText = moons[Math.floor(Math.random() * moons.length)];
+            el.style.left = x + 'px';
+            el.style.top  = y + 'px';
+            el.style.setProperty('--dx', (Math.random() - 0.5) * 160 + 'px');
+            el.style.setProperty('--dy', (Math.random() - 0.5) * 160 + 'px');
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 1300);
+        }
+    }
 
-      // Crear constelaciones en el canvas
-      const canvas = document.getElementById('starCanvas');
-      const ctx = canvas.getContext('2d');
+    // ===================== BACKGROUND CANVAS =====================
+    const bgCanvas = document.getElementById('background-canvas');
+    const bgCtx    = bgCanvas.getContext('2d');
+    function resizeBg() { bgCanvas.width = innerWidth; bgCanvas.height = innerHeight; }
+    window.addEventListener('resize', () => { resizeBg(); resizeSS(); });
+    resizeBg();
 
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+    const stars = Array.from({length: 220}, () => ({
+        x: Math.random() * bgCanvas.width,
+        y: Math.random() * bgCanvas.height,
+        r: Math.random() * 1.6 + 0.2,
+        a: Math.random()
+    }));
+    const shootingStars = [];
 
-      const stars = [];
-      const numStars = 120;
-
-      // Generar estrellas aleatorias
-      for (let i = 0; i < numStars; i++) {
-        stars.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          radius: Math.random() * 1.2,
-          opacity: Math.random() * 0.6 + 0.3,
-          originalX: 0,
-          originalY: 0
+    function createShootingStar() {
+        if (Math.random() > 0.025) return;
+        shootingStars.push({
+            x: Math.random() * bgCanvas.width * 1.5,
+            y: -50,
+            len: Math.random() * 90 + 25,
+            speed: Math.random() * 14 + 6,
+            angle: Math.PI / 4 + (Math.random() - 0.5) * 0.25,
+            life: 1
         });
-      }
+    }
 
-      // Guardar posiciones originales
-      stars.forEach(star => {
-        star.originalX = star.x;
-        star.originalY = star.y;
-      });
-
-      // Dibujar constelaciones
-      function drawStars() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        // Dibujar estrellas
-        stars.forEach(star => {
-          ctx.fillStyle = `rgba(220, 200, 180, ${star.opacity})`;
-          ctx.beginPath();
-          ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-          ctx.fill();
-        });
-
-        // Conectar estrellas cercanas con líneas más visibles
-        for (let i = 0; i < stars.length; i++) {
-          for (let j = i + 1; j < stars.length; j++) {
-            const dx = stars[i].x - stars[j].x;
-            const dy = stars[i].y - stars[j].y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < 180) {
-              // Hacer las líneas más visibles y brillantes
-              const opacity = Math.max(0.1, 0.4 * (1 - distance / 180));
-              ctx.strokeStyle = `rgba(220, 200, 180, ${opacity})`;
-              ctx.lineWidth = 1.2;
-              ctx.lineCap = 'round';
-              ctx.lineJoin = 'round';
-              
-              ctx.beginPath();
-              ctx.moveTo(stars[i].x, stars[i].y);
-              ctx.lineTo(stars[j].x, stars[j].y);
-              ctx.stroke();
-
-              // Efecto de brillo en las líneas
-              ctx.strokeStyle = `rgba(255, 220, 200, ${opacity * 0.5})`;
-              ctx.lineWidth = 0.5;
-              ctx.stroke();
+    function drawBg(t) {
+        bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+        stars.forEach((s, i) => {
+            const alpha = 0.5 + 0.5 * Math.sin(t * 0.001 + s.a * 20);
+            bgCtx.fillStyle = `rgba(255,255,255,${alpha})`;
+            bgCtx.beginPath();
+            bgCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            bgCtx.fill();
+            for (let j = i + 1; j < i + 3; j++) {
+                if (!stars[j]) continue;
+                const dx = s.x - stars[j].x, dy = s.y - stars[j].y;
+                const dist = Math.hypot(dx, dy);
+                if (dist < 80) {
+                    bgCtx.beginPath();
+                    bgCtx.strokeStyle = `rgba(112,92,184,${0.08*(1-dist/80)})`;
+                    bgCtx.moveTo(s.x, s.y); bgCtx.lineTo(stars[j].x, stars[j].y);
+                    bgCtx.stroke();
+                }
             }
-          }
-        }
-      }
-
-      // Animar parpadeo de estrellas y seguimiento del mouse
-      function animateStars() {
-        stars.forEach(star => {
-          star.opacity += (Math.random() - 0.5) * 0.08;
-          star.opacity = Math.max(0.2, Math.min(0.9, star.opacity));
-
-          // Hacer que las estrellas se muevan hacia el mouse
-          const dx = mouseX - star.x;
-          const dy = mouseY - star.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance > 50) {
-            const moveSpeed = 0.03;
-            star.x += (dx / distance) * moveSpeed;
-            star.y += (dy / distance) * moveSpeed;
-          } else {
-            // Si está muy cerca del mouse, volver lentamente a la posición original
-            star.x += (star.originalX - star.x) * 0.02;
-            star.y += (star.originalY - star.y) * 0.02;
-          }
         });
-        drawStars();
-        requestAnimationFrame(animateStars);
-      }
 
-      // Seguir movimiento del mouse
-      document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-      });
-
-      // Crear botones dinámicamente
-      const container = document.getElementById('buttonsContainer');
-      frases.forEach((frase, index) => {
-        const button = document.createElement('button');
-        button.textContent = `${index + 1}`;
-        button.onclick = () => mostrarFrase(index);
-        container.appendChild(button);
-      });
-
-      // Mostrar frase y generar gotas de sangre
-      function mostrarFrase(index) {
-        const phraseElement = document.getElementById('phrase');
-        const frase = frases[index];
-        
-        phraseElement.innerHTML = `${frase.texto}<div class="author">— ${frase.autor}</div>`;
-        phraseElement.style.animation = 'none';
-        setTimeout(() => {
-          phraseElement.style.animation = 'fadeIn 0.6s ease-in';
-        }, 10);
-
-        // Mostrar mensaje de éxito
-        const message = document.getElementById('successMessage');
-        message.classList.add('show');
-        setTimeout(() => {
-          message.classList.remove('show');
-        }, 2500);
-
-        // Generar gotas de sangre
-        generarGotasSangre(12);
-        
-        // Generar luna
-        generarLuna();
-      }
-
-      // Generar gotas de sangre animadas
-      function generarGotasSangre(cantidad) {
-        const simbolos = ['🩸', '🫀' ,'🩸'];
-        for (let i = 0; i < cantidad; i++) {
-          const drop = document.createElement('div');
-          drop.className = 'blood-drop';
-          drop.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
-          
-          const x = Math.random() * window.innerWidth;
-          const y = Math.random() * window.innerHeight * 0.3;
-          const tx = (Math.random() - 0.5) * 250;
-
-          drop.style.left = x + 'px';
-          drop.style.top = y + 'px';
-          drop.style.setProperty('--tx', tx + 'px');
-
-          document.body.appendChild(drop);
-
-          setTimeout(() => {
-            drop.remove();
-          }, 3000);
+        createShootingStar();
+        for (let i = shootingStars.length - 1; i >= 0; i--) {
+            const s = shootingStars[i];
+            s.x -= Math.cos(s.angle) * s.speed;
+            s.y += Math.sin(s.angle) * s.speed;
+            bgCtx.beginPath();
+            bgCtx.strokeStyle = `rgba(220,210,255,${s.life * 0.85})`;
+            bgCtx.lineWidth = 1.5;
+            bgCtx.moveTo(s.x, s.y);
+            bgCtx.lineTo(s.x + Math.cos(s.angle)*s.len, s.y - Math.sin(s.angle)*s.len);
+            bgCtx.stroke();
+            bgCtx.lineWidth = 1;
+            s.life -= 0.012;
+            if (s.y > bgCanvas.height + 100 || s.x < -100 || s.life <= 0) shootingStars.splice(i, 1);
         }
-      }
+        requestAnimationFrame(drawBg);
+    }
+    requestAnimationFrame(drawBg);
 
-      // Generar luna
-      function generarLuna() {
-        const moon = document.createElement('div');
-        moon.className = 'moon';
-        moon.textContent = '🌙';
-        
-        const x = Math.random() * window.innerWidth;
-        const y = window.innerHeight;
-        const tx = (Math.random() - 0.5) * 200;
+    // ===================== SOLAR SYSTEM CANVAS =====================
+    const ssCanvas = document.getElementById('solar-system-canvas');
+    const ssCtx    = ssCanvas.getContext('2d');
+    let W, H, cx, cy;
 
-        moon.style.left = x + 'px';
-        moon.style.top = y + 'px';
-        moon.style.setProperty('--tx', tx + 'px');
+    function resizeSS() {
+        W = ssCanvas.width  = innerWidth;
+        H = ssCanvas.height = innerHeight;
+        cx = W / 2; cy = H / 2;
+    }
+    resizeSS();
 
-        document.body.appendChild(moon);
+    // --- Texture generators ---
+    function makeTexture(size, drawFn) {
+        const c = document.createElement('canvas');
+        c.width = c.height = size;
+        drawFn(c.getContext('2d'), size);
+        return c;
+    }
 
-        setTimeout(() => {
-          moon.remove();
-        }, 3000);
-      }
-
-      // Animación de fade in
-      const style = document.createElement('style');
-      style.textContent = `
-        @keyframes fadeIn {
-          from { opacity: 0; transform: scale(0.95); }
-          to { opacity: 1; transform: scale(1); }
+    const texSun = makeTexture(128, (g, s) => {
+        let grd = g.createRadialGradient(s*0.4,s*0.35,0, s/2,s/2,s/2);
+        grd.addColorStop(0,'#fff7b0'); grd.addColorStop(0.3,'#ffe359');
+        grd.addColorStop(0.7,'#ffa500'); grd.addColorStop(1,'#c85000');
+        g.fillStyle = grd; g.fillRect(0,0,s,s);
+        for(let i=0;i<120;i++){
+            g.fillStyle = `rgba(255,${120+Math.random()*80},0,${0.08+Math.random()*0.15})`;
+            const bx=Math.random()*s, by=Math.random()*s, br=Math.random()*14+3;
+            g.beginPath(); g.arc(bx,by,br,0,Math.PI*2); g.fill();
         }
-      `;
-      document.head.appendChild(style);
+    });
 
-      // Redimensionar canvas con la ventana
-      window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      });
+    const texMercury = makeTexture(64, (g, s) => {
+        let grd = g.createRadialGradient(s*0.38,s*0.35,0, s/2,s/2,s/2);
+        grd.addColorStop(0,'#d0c8b0'); grd.addColorStop(0.5,'#9a8e7a'); grd.addColorStop(1,'#5a4e40');
+        g.fillStyle=grd; g.fillRect(0,0,s,s);
+        for(let i=0;i<60;i++){
+            const cx2=Math.random()*s, cy2=Math.random()*s, cr=Math.random()*5+1;
+            g.fillStyle=`rgba(60,50,40,${0.1+Math.random()*0.25})`;
+            g.beginPath(); g.arc(cx2,cy2,cr,0,Math.PI*2); g.fill();
+            g.strokeStyle=`rgba(180,170,150,0.2)`;
+            g.lineWidth=0.5; g.stroke();
+        }
+    });
 
-      // Iniciar animación
-      animateStars();
+    const texVenus = makeTexture(64, (g, s) => {
+        let grd = g.createRadialGradient(s*0.38,s*0.35,0, s/2,s/2,s/2);
+        grd.addColorStop(0,'#fff0b0'); grd.addColorStop(0.4,'#e8c060'); grd.addColorStop(1,'#a06020');
+        g.fillStyle=grd; g.fillRect(0,0,s,s);
+        for(let i=0;i<8;i++){
+            g.strokeStyle=`rgba(200,150,50,${0.15+Math.random()*0.2})`;
+            g.lineWidth=4+Math.random()*6;
+            g.beginPath(); g.moveTo(0, s*(0.1+i*0.1)); g.lineTo(s, s*(0.15+i*0.1+Math.random()*0.05));
+            g.stroke();
+        }
+    });
+
+    const texEarth = makeTexture(128, (g, s) => {
+        let grd = g.createRadialGradient(s*0.38,s*0.35,0, s/2,s/2,s/2);
+        grd.addColorStop(0,'#90d8ff'); grd.addColorStop(0.4,'#3a7fda'); grd.addColorStop(1,'#1a3a6a');
+        g.fillStyle=grd; g.fillRect(0,0,s,s);
+        const continents=[
+            {x:0.35,y:0.35,w:0.22,h:0.18,c:'#3a9a50'},{x:0.52,y:0.25,w:0.18,h:0.22,c:'#4aaa55'},
+            {x:0.20,y:0.50,w:0.14,h:0.20,c:'#3a9a50'},{x:0.55,y:0.50,w:0.20,h:0.18,c:'#4aaa55'},
+            {x:0.38,y:0.60,w:0.12,h:0.12,c:'#7ab870'},{x:0.65,y:0.35,w:0.10,h:0.08,c:'#c8b86a'}
+        ];
+        continents.forEach(cont=>{
+            g.fillStyle=cont.c;
+            g.beginPath();
+            g.ellipse(s*cont.x, s*cont.y, s*cont.w, s*cont.h, Math.random()*1, 0, Math.PI*2);
+            g.fill();
+        });
+        g.fillStyle='rgba(255,255,255,0.55)';
+        for(let i=0;i<4;i++){
+            g.beginPath();
+            g.ellipse(s*(0.15+Math.random()*0.7), s*(0.2+Math.random()*0.3), s*(0.06+Math.random()*0.1), s*0.03, Math.random()*Math.PI, 0, Math.PI*2);
+            g.fill();
+        }
+    });
+
+    const texMars = makeTexture(64, (g, s) => {
+        let grd = g.createRadialGradient(s*0.38,s*0.35,0, s/2,s/2,s/2);
+        grd.addColorStop(0,'#ff9060'); grd.addColorStop(0.5,'#d84020'); grd.addColorStop(1,'#6a1808');
+        g.fillStyle=grd; g.fillRect(0,0,s,s);
+        for(let i=0;i<18;i++){
+            g.fillStyle=`rgba(100,30,10,${0.1+Math.random()*0.2})`;
+            g.beginPath(); g.arc(Math.random()*s, Math.random()*s, Math.random()*7+2, 0, Math.PI*2); g.fill();
+        }
+        g.fillStyle='rgba(220,180,130,0.6)';
+        g.beginPath(); g.ellipse(s*0.72, s*0.18, s*0.08, s*0.06, -0.3, 0, Math.PI*2); g.fill();
+        g.fillStyle='rgba(220,210,190,0.6)';
+        g.beginPath(); g.ellipse(s*0.22, s*0.82, s*0.09, s*0.06, 0.2, 0, Math.PI*2); g.fill();
+    });
+
+    const texJupiter = makeTexture(128, (g, s) => {
+        let grd = g.createRadialGradient(s*0.38,s*0.35,0, s/2,s/2,s/2);
+        grd.addColorStop(0,'#ffe0a0'); grd.addColorStop(0.5,'#d4903a'); grd.addColorStop(1,'#7a4010');
+        g.fillStyle=grd; g.fillRect(0,0,s,s);
+        const bands=[
+            {y:0.12,h:0.07,c:'rgba(160,90,40,0.55)'},{y:0.22,h:0.05,c:'rgba(200,130,60,0.4)'},
+            {y:0.30,h:0.09,c:'rgba(140,80,30,0.5)'},{y:0.42,h:0.06,c:'rgba(210,150,80,0.35)'},
+            {y:0.51,h:0.08,c:'rgba(150,85,35,0.5)'},{y:0.62,h:0.06,c:'rgba(200,130,55,0.4)'},
+            {y:0.71,h:0.07,c:'rgba(140,75,30,0.45)'},{y:0.80,h:0.09,c:'rgba(180,110,50,0.4)'}
+        ];
+        bands.forEach(b=>{ g.fillStyle=b.c; g.fillRect(0,s*b.y,s,s*b.h); });
+        g.fillStyle='rgba(180,80,60,0.7)';
+        g.beginPath(); g.ellipse(s*0.38, s*0.58, s*0.10, s*0.062, 0, 0, Math.PI*2); g.fill();
+        g.strokeStyle='rgba(200,100,60,0.5)'; g.lineWidth=1.5;
+        g.beginPath(); g.ellipse(s*0.38, s*0.58, s*0.10, s*0.062, 0, 0, Math.PI*2); g.stroke();
+    });
+
+    const texSaturn = makeTexture(128, (g, s) => {
+        let grd = g.createRadialGradient(s*0.38,s*0.35,0, s/2,s/2,s/2);
+        grd.addColorStop(0,'#fff0d0'); grd.addColorStop(0.4,'#d4b870'); grd.addColorStop(1,'#7a6020');
+        g.fillStyle=grd; g.fillRect(0,0,s,s);
+        const sbands=[
+            {y:0.18,h:0.06,c:'rgba(160,120,50,0.4)'},{y:0.28,h:0.08,c:'rgba(140,100,40,0.35)'},
+            {y:0.40,h:0.05,c:'rgba(170,130,55,0.3)'},{y:0.50,h:0.07,c:'rgba(150,110,45,0.4)'},
+            {y:0.60,h:0.06,c:'rgba(160,120,50,0.3)'},{y:0.70,h:0.08,c:'rgba(140,100,40,0.35)'}
+        ];
+        sbands.forEach(b=>{ g.fillStyle=b.c; g.fillRect(0,s*b.y,s,s*b.h); });
+    });
+
+    const texUranus = makeTexture(64, (g, s) => {
+        let grd = g.createRadialGradient(s*0.38,s*0.35,0, s/2,s/2,s/2);
+        grd.addColorStop(0,'#d0faff'); grd.addColorStop(0.5,'#60c8d8'); grd.addColorStop(1,'#1a6878');
+        g.fillStyle=grd; g.fillRect(0,0,s,s);
+        for(let i=0;i<5;i++){
+            g.strokeStyle=`rgba(100,210,220,${0.1+Math.random()*0.2})`;
+            g.lineWidth=2+Math.random()*3;
+            g.beginPath(); g.moveTo(0,s*(0.2+i*0.14)); g.lineTo(s,s*(0.22+i*0.14)); g.stroke();
+        }
+    });
+
+    const texNeptune = makeTexture(64, (g, s) => {
+        let grd = g.createRadialGradient(s*0.38,s*0.35,0, s/2,s/2,s/2);
+        grd.addColorStop(0,'#a0c0ff'); grd.addColorStop(0.4,'#2050d8'); grd.addColorStop(1,'#080830');
+        g.fillStyle=grd; g.fillRect(0,0,s,s);
+        g.fillStyle='rgba(180,210,255,0.5)';
+        g.beginPath(); g.ellipse(s*0.35, s*0.42, s*0.12, s*0.06, -0.4, 0, Math.PI*2); g.fill();
+        for(let i=0;i<4;i++){
+            g.strokeStyle=`rgba(80,130,255,${0.1+Math.random()*0.15})`;
+            g.lineWidth=3+Math.random()*4;
+            g.beginPath(); g.moveTo(0,s*(0.15+i*0.2)); g.lineTo(s,s*(0.18+i*0.2)); g.stroke();
+        }
+    });
+
+    // Moon textures
+    const texMoon = makeTexture(32, (g, s) => {
+        let grd = g.createRadialGradient(s*0.38,s*0.35,0, s/2,s/2,s/2);
+        grd.addColorStop(0,'#e0e0d0'); grd.addColorStop(0.6,'#a0a090'); grd.addColorStop(1,'#505040');
+        g.fillStyle=grd; g.fillRect(0,0,s,s);
+        for(let i=0;i<12;i++){
+            g.fillStyle=`rgba(50,50,40,${0.1+Math.random()*0.2})`;
+            g.beginPath(); g.arc(Math.random()*s,Math.random()*s,Math.random()*3+1,0,Math.PI*2); g.fill();
+        }
+    });
+    const texIo = makeTexture(32, (g,s)=>{
+        let grd=g.createRadialGradient(s*.4,s*.35,0,s/2,s/2,s/2);
+        grd.addColorStop(0,'#fff080'); grd.addColorStop(0.5,'#d0a000'); grd.addColorStop(1,'#703000');
+        g.fillStyle=grd; g.fillRect(0,0,s,s);
+        for(let i=0;i<10;i++){ g.fillStyle=`rgba(80,30,0,${0.2+Math.random()*.3})`; g.beginPath(); g.arc(Math.random()*s,Math.random()*s,Math.random()*5+1,0,Math.PI*2); g.fill(); }
+    });
+    const texTitan = makeTexture(32,(g,s)=>{
+        let grd=g.createRadialGradient(s*.4,s*.35,0,s/2,s/2,s/2);
+        grd.addColorStop(0,'#ffb060'); grd.addColorStop(0.6,'#c06020'); grd.addColorStop(1,'#501000');
+        g.fillStyle=grd; g.fillRect(0,0,s,s);
+        g.fillStyle='rgba(80,30,0,0.3)'; g.beginPath(); g.arc(s*.6,s*.5,s*.18,0,Math.PI*2); g.fill();
+    });
+
+    // ===================== PLANET DATA =====================
+    // Orbit sizes relative to min(W,H)/2
+    // Each orbit is an ellipse with rx = base * aspect, ry = base
+    const SCALE = () => Math.min(W, H) * 0.46;
+
+    const planets = [
+        { id:'mercurio', name:'Mercurio', orbitR:0.13, period:6,  size:5,  tex:texMercury, color:'#9a8e7a', startAngle: 0.8, moons:[] },
+        { id:'venus',    name:'Venus',    orbitR:0.20, period:10, size:7,  tex:texVenus,   color:'#e8c060', startAngle: 2.5, moons:[] },
+        { id:'tierra',   name:'Tierra',   orbitR:0.30, period:18, size:9,  tex:texEarth,   color:'#4ca6ff', startAngle: 4.2,
+            moons:[{ name:'Luna', r:18, period:3, size:3, tex:texMoon, startAngle:0 }] },
+        { id:'marte',    name:'Marte',    orbitR:0.40, period:28, size:7,  tex:texMars,    color:'#d84020', startAngle: 1.1,
+            moons:[
+                { name:'Fobos', r:13, period:1.2, size:2, tex:texMoon, startAngle:1.0 },
+                { name:'Deimos',r:20, period:2.2, size:2, tex:texMoon, startAngle:3.5 }
+            ]
+        },
+        { id:'jupiter',  name:'Júpiter',  orbitR:0.57, period:55, size:22, tex:texJupiter, color:'#d4903a', startAngle: 3.0,
+            moons:[
+                { name:'Ío',     r:30, period:1.8, size:4, tex:texIo,   startAngle:0.5 },
+                { name:'Europa', r:40, period:3.0, size:3, tex:texMoon, startAngle:2.0 },
+                { name:'Ganimedes', r:54, period:5.0, size:5, tex:texMoon, startAngle:4.0 },
+                { name:'Calisto', r:68, period:8.5, size:4, tex:texMoon, startAngle:1.5 }
+            ]
+        },
+        { id:'saturno',  name:'Saturno',  orbitR:0.73, period:75, size:17, tex:texSaturn,  color:'#d4b870', startAngle: 5.5,
+            rings: true,
+            moons:[
+                { name:'Titán',  r:30, period:4.5, size:5, tex:texTitan, startAngle:2.2 },
+                { name:'Encélado', r:22, period:2.5, size:2, tex:texMoon, startAngle:0.8 },
+                { name:'Mimas',  r:16, period:1.6, size:2, tex:texMoon, startAngle:4.5 }
+            ]
+        },
+        { id:'urano',    name:'Urano',    orbitR:0.85, period:95, size:13, tex:texUranus,  color:'#60c8d8', startAngle: 2.8,
+            moons:[
+                { name:'Titania', r:22, period:3.5, size:3, tex:texMoon, startAngle:1.0 },
+                { name:'Oberón',  r:30, period:5.0, size:3, tex:texMoon, startAngle:3.0 }
+            ]
+        },
+        { id:'neptuno',  name:'Neptuno',  orbitR:0.97, period:120, size:12, tex:texNeptune, color:'#2050d8', startAngle: 0.3,
+            moons:[
+                { name:'Tritón', r:22, period:4.0, size:4, tex:texMoon, startAngle:2.5 }
+            ]
+        }
+    ];
+
+    // ===================== HIT TEST DATA =====================
+    let hitObjects = []; // { type, id, x, y, r }
+
+    // ===================== DRAW PLANET =====================
+    function drawTexturedCircle(ctx, tex, x, y, r) {
+        ctx.save();
+        ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2); ctx.clip();
+        // Slight shading overlay direction
+        ctx.drawImage(tex, x-r, y-r, r*2, r*2);
+        // Limb darkening
+        let lim = ctx.createRadialGradient(x-r*0.25, y-r*0.25, r*0.05, x, y, r);
+        lim.addColorStop(0, 'rgba(255,255,255,0.12)');
+        lim.addColorStop(0.65,'rgba(0,0,0,0)');
+        lim.addColorStop(1, 'rgba(0,0,0,0.55)');
+        ctx.fillStyle = lim; ctx.fillRect(x-r, y-r, r*2, r*2);
+        ctx.restore();
+    }
+
+    function drawSaturnRings(ctx, x, y, r) {
+        const rInner = r * 1.35, rOuter = r * 2.1;
+        ctx.save();
+        // Behind shadow - simple ellipse rings
+        [
+            { ri: rInner, ro: rOuter*0.55+rInner*0.45, alpha:0.12, color:'rgba(210,185,120,' },
+            { ri: rInner, ro: rOuter,                  alpha:0.22, color:'rgba(210,185,120,' },
+            { ri: rInner*1.05, ro: rOuter*0.9,         alpha:0.18, color:'rgba(180,150,80,' }
+        ].forEach(ring => {
+            const grad = ctx.createRadialGradient(x,y, ring.ri, x,y, ring.ro);
+            grad.addColorStop(0, ring.color + '0)');
+            grad.addColorStop(0.3, ring.color + ring.alpha + ')');
+            grad.addColorStop(0.7, ring.color + ring.alpha*0.7 + ')');
+            grad.addColorStop(1, ring.color + '0)');
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.ellipse(x, y, ring.ro, ring.ro*0.28, 0, 0, Math.PI*2);
+            ctx.ellipse(x, y, ring.ri, ring.ri*0.28, 0, Math.PI, -Math.PI, true);
+            ctx.fill();
+        });
+        ctx.restore();
+    }
+
+    // ===================== MAIN LOOP =====================
+    let t0 = null;
+    function drawSS(ts) {
+        if (!t0) t0 = ts;
+        const t = (ts - t0) / 1000;
+
+        ssCtx.clearRect(0, 0, W, H);
+        hitObjects = [];
+
+        const sc = SCALE();
+
+        // --- Orbits ---
+        planets.forEach(p => {
+            const orR = sc * p.orbitR;
+            ssCtx.beginPath();
+            ssCtx.ellipse(cx, cy, orR, orR * 0.38, 0, 0, Math.PI*2);
+            ssCtx.strokeStyle = 'rgba(112,92,184,0.18)';
+            ssCtx.setLineDash([4,6]);
+            ssCtx.lineWidth = 0.8;
+            ssCtx.stroke();
+            ssCtx.setLineDash([]);
+        });
+
+        // --- Sun ---
+        const sunR = Math.max(18, sc * 0.07);
+        drawTexturedCircle(ssCtx, texSun, cx, cy, sunR);
+        // Glow
+        let sunGlow = ssCtx.createRadialGradient(cx, cy, sunR*0.5, cx, cy, sunR*2.8);
+        sunGlow.addColorStop(0, 'rgba(255,200,60,0.25)');
+        sunGlow.addColorStop(0.5,'rgba(255,150,0,0.08)');
+        sunGlow.addColorStop(1, 'rgba(255,100,0,0)');
+        ssCtx.fillStyle = sunGlow;
+        ssCtx.beginPath(); ssCtx.arc(cx, cy, sunR*2.8, 0, Math.PI*2); ssCtx.fill();
+        hitObjects.push({ type:'planet', id:'sol', x:cx, y:cy, r:sunR });
+
+        // --- Planets ---
+        planets.forEach(p => {
+            const orR = sc * p.orbitR;
+            const angle = p.startAngle + (2 * Math.PI * t) / p.period;
+            // Elliptical orbit: x = orR, y = orR*0.38
+            const px = cx + orR * Math.cos(angle);
+            const py = cy + orR * 0.38 * Math.sin(angle);
+            const pr = Math.max(4, p.size * (sc / 260));
+
+            // Saturn rings (behind planet)
+            if (p.rings) drawSaturnRings(ssCtx, px, py, pr);
+
+            // Draw planet
+            drawTexturedCircle(ssCtx, p.tex, px, py, pr);
+            hitObjects.push({ type:'planet', id:p.id, x:px, y:py, r:pr });
+
+            // --- Moons ---
+            if (p.moons) {
+                p.moons.forEach(m => {
+                    const mr = Math.max(2, m.size * (sc / 280));
+                    const mAngle = m.startAngle + (2 * Math.PI * t) / m.period;
+                    const mOrbitR = m.r * (sc / 220);
+                    const mx2 = px + mOrbitR * Math.cos(mAngle);
+                    const my2 = py + mOrbitR * 0.5 * Math.sin(mAngle);
+
+                    // Moon orbit
+                    ssCtx.beginPath();
+                    ssCtx.ellipse(px, py, mOrbitR, mOrbitR*0.5, 0, 0, Math.PI*2);
+                    ssCtx.strokeStyle = 'rgba(180,160,220,0.12)';
+                    ssCtx.lineWidth = 0.6;
+                    ssCtx.stroke();
+
+                    drawTexturedCircle(ssCtx, m.tex, mx2, my2, mr);
+                });
+            }
+
+            // Planet label
+            ssCtx.fillStyle = 'rgba(210,200,240,0.55)';
+            ssCtx.font = `${Math.max(9, pr*0.7)}px Segoe UI`;
+            ssCtx.textAlign = 'center';
+            ssCtx.fillText(p.name, px, py - pr - 5);
+        });
+
+        requestAnimationFrame(drawSS);
+    }
+    requestAnimationFrame(drawSS);
+
+    // ===================== CLICK HANDLER =====================
+    ssCanvas.addEventListener('click', e => {
+        const rect = ssCanvas.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+        for (const obj of hitObjects) {
+            const dist = Math.hypot(mx - obj.x, my - obj.y);
+            if (dist <= obj.r + 8) {
+                if (poems[obj.id]) showPoem(obj.id, e.clientX, e.clientY);
+                break;
+            }
+        }
+    });
+
+    // Cursor pointer on hover
+    ssCanvas.addEventListener('mousemove', e => {
+        const rect = ssCanvas.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+        let hit = false;
+        for (const obj of hitObjects) {
+            if (Math.hypot(mx - obj.x, my - obj.y) <= obj.r + 8) { hit = true; break; }
+        }
+        ssCanvas.style.cursor = hit ? 'pointer' : 'default';
+    });
     </script>
-  </body>
+</body>
 </html>
